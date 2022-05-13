@@ -8,10 +8,16 @@ var openWeatherAPIKey = "aa73a952cd3ffc3c1bb66791a553f2ee";
 var searchBtn = document.querySelector("#citySearchBtn");
 var cityInput = document.querySelector("#city_search");
 var recentSearchList = document.querySelector("#recentSearchList");
+var currentLocationSpan = document.querySelector("#currentLocation")
 var recentSearch = [];
 var currentCityState = {};
 
 var updateCurrentWeather = function(weatherData){
+
+  // set current weather header
+  currentLocationSpan.textContent = currentCityState.name + ", " + currentCityState.state;
+
+  // add weather data to page
 
 }
 
@@ -20,14 +26,14 @@ var updateLocalStorage = function(){
   localStorage.setItem("recentSearch", JSON.stringify(recentSearch));
 }
 
-var getWeatherData = function(){
-  // get text input value
-  var city = cityInput.value.trim();
+var getWeatherData = function(city){
+
   var testGeocoderURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + ",US&limit=1&appid=" + openWeatherAPIKey;
 
   fetch(testGeocoderURL).then(function(geocoderResponse){
     if(geocoderResponse.ok){
       geocoderResponse.json().then(function(geocoderData){
+        console.log(geocoderData);
         // update recents
         currentCityState = geocoderData[0];
         updateRecentSearchList(geocoderData[0].name, geocoderData[0].state);
@@ -94,6 +100,19 @@ var resumeState = function(){
 
 }
 
+var recentSearchHandler = function(event){
+  var city = event.target.textContent.trim().replace(" / ",",");
+  console.log(event.target.textContent);
+  getWeatherData(city);
+}
+
+var searchHandler = function(event){
+  // get text input value
+  var city = cityInput.value.trim();
+  getWeatherData(city);
+}
+
 resumeState();
 
-searchBtn.addEventListener("click", getWeatherData);
+searchBtn.addEventListener("click", searchHandler);
+recentSearchList.addEventListener("click", recentSearchHandler);
