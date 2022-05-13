@@ -4,9 +4,68 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+
   <title>Weather Dashboard</title>
 </head>
 <body>
+  <div>
+    <div class="row">
+      <div class="col s12 center-align"><h1>Weather Dashboard</h1></div>
+    </div>
+    <div class="row">
+      <div class="col s4 city-search">
+        <!-- Add Search Form -->
+        <div class="section">
+          <h3>Search for a City:</h3>
+          <div class="input-field">
+            <input placeholder="City, State" id="city_search" type="text" class="validate">
+          </div>
+          <div class="input-field">
+            <button id="citySearchBtn" class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <!-- Add 'Recent' List -->
+        <div id="recentSearchList">
+          <div class="input-field section">
+            <button class="waves-effect waves-light btn grey lighten-1 col s12">city</button>
+          </div>
+          <div class="input-field section">
+            <button class="waves-effect waves-light btn grey lighten-1 col s12">city</button>
+          </div>
+          <div class="input-field section">
+            <button class="waves-effect waves-light btn grey lighten-1 col s12">city</button>
+          </div>
+          <div class="input-field section">
+            <button class="waves-effect waves-light btn grey lighten-1 col s12">city</button>
+          </div>
+          <div class="input-field section">
+            <button class="waves-effect waves-light btn grey lighten-1 col s12">city</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="col s8">
+        <div class="row">
+          <!-- Current Conditions -->
+          <div class="col s12"></div>
+          <!-- 5 day -->
+          <div class="col s12 m4 l2"></div>
+          <div class="col s12 m4 l2"></div>
+          <div class="col s12 m4 l2"></div>
+          <div class="col s12 m4 l2"></div>
+          <div class="col s12 m4 l2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Compiled and minified JavaScript -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
 
   <script src="assets/js/script.js"></script>
 </body>
