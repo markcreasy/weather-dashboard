@@ -23,7 +23,7 @@ var buildCardEl = function(weatherData,numDaysInFuture){
   cardEl.classList = "card-content amber";
 
   // create card title (date)
-  var cardTitleEl = document.createElement("span");
+  var cardTitleEl = document.createElement("h6");
   cardTitleEl.classList = "card-title";
   var date = new Date(weatherData.dt * 1000);
   var dd = String(date.getDate()).padStart(2, '0');
