@@ -9,7 +9,16 @@ var searchBtn = document.querySelector("#citySearchBtn");
 var cityInput = document.querySelector("#city_search");
 var recentSearchList = document.querySelector("#recentSearchList");
 var recentSearch = [];
+var currentCityState = {};
 
+var updateCurrentWeather = function(weatherData){
+
+}
+
+var updateLocalStorage = function(){
+  localStorage.setItem("currentCityState",JSON.stringify(currentCityState));
+  localStorage.setItem("recentSearch", JSON.stringify(recentSearch));
+}
 
 var getWeatherData = function(){
   // get text input value
@@ -20,6 +29,7 @@ var getWeatherData = function(){
     if(geocoderResponse.ok){
       geocoderResponse.json().then(function(geocoderData){
         // update recents
+        currentCityState = geocoderData[0];
         updateRecentSearchList(geocoderData[0].name, geocoderData[0].state);
 
         var openWeatherOneCallAPI = "https://api.openweathermap.org/data/2.5/onecall?lat=" + geocoderData[0].lat + "&lon=" + geocoderData[0].lon + "&exclude=minutely,hourly,alerts&appid=" + openWeatherAPIKey;
@@ -27,7 +37,8 @@ var getWeatherData = function(){
         fetch(openWeatherOneCallAPI).then(function(oneCallAPIResponse){
           if(oneCallAPIResponse.ok){
             oneCallAPIResponse.json().then(function(weatherData){
-              return weatherData;
+              updateCurrentWeather(weatherData);
+              updateLocalStorage();
             });
           }else{
             console.log("OneCallAPI HTTP-Error: " + oneCallAPIResponse.status);
@@ -70,5 +81,19 @@ var updateRecentSearchList = function(city, state){
     recentSearchList.appendChild(searchDiv);
   }
 }
+
+var resumeState = function(){
+  recentSearch = JSON.parse(localStorage.getItem("recentSearch"));
+  console.log("recentsearch",recentSearch);
+  currentCityState = JSON.parse(localStorage.getItem("currentCityState"));
+  console.log("currentCityState", currentCityState);
+
+  if(recentSearch != null && currentCityState != null){
+    updateRecentSearchList(currentCityState.name, currentCityState.state);
+  }
+
+}
+
+resumeState();
 
 searchBtn.addEventListener("click", getWeatherData);
