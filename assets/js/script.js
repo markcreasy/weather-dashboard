@@ -34,7 +34,7 @@ var buildCardEl = function(weatherData,numDaysInFuture){
 
   // create weather icon and add to current location span
   var weatherIcon = document.createElement("img");
-  weatherIcon.src = "http://openweathermap.org/img/wn/" + weatherData.weather[0].icon + "@2x.png";
+  weatherIcon.src = "https://openweathermap.org/img/wn/" + weatherData.weather[0].icon + "@2x.png";
 
   // create temp info
   var tempInfoEl = document.createElement("p");
@@ -73,7 +73,7 @@ var updateCurrentWeather = function(weatherData){
 
   // create weather icon and add to current location span
   var weatherIcon = document.createElement("img");
-  weatherIcon.src = "http://openweathermap.org/img/wn/" + weatherData.current.weather[0].icon + "@2x.png";
+  weatherIcon.src = "https://openweathermap.org/img/wn/" + weatherData.current.weather[0].icon + "@2x.png";
   currentLocationSpan.appendChild(weatherIcon);
 
   while(currentWeatherInfoEl.firstChild){
