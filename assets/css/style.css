@@ -1,3 +1,14 @@
 .city-search button{
   width: 100%
 }
+
+.uv-span{
+  padding:5px 8px;
+  border-radius:5px;
+  color:white;
+  font-weight: bold;
+}
+
+.card-content{
+  padding:15px;
+}
