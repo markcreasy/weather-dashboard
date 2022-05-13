@@ -11,18 +11,22 @@ var recentSearchList = document.querySelector("#recentSearchList");
 var recentSearch = [];
 
 
-var getWeatherData = function(city){
+var getWeatherData = function(){
+  // get text input value
+  var city = cityInput.value.trim();
   var testGeocoderURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + ",US&limit=1&appid=" + openWeatherAPIKey;
 
   fetch(testGeocoderURL).then(function(geocoderResponse){
     if(geocoderResponse.ok){
       geocoderResponse.json().then(function(geocoderData){
+        // update recents
+        updateRecentSearchList(geocoderData[0].name, geocoderData[0].state);
+
         var openWeatherOneCallAPI = "https://api.openweathermap.org/data/2.5/onecall?lat=" + geocoderData[0].lat + "&lon=" + geocoderData[0].lon + "&exclude=minutely,hourly,alerts&appid=" + openWeatherAPIKey;
 
         fetch(openWeatherOneCallAPI).then(function(oneCallAPIResponse){
           if(oneCallAPIResponse.ok){
             oneCallAPIResponse.json().then(function(weatherData){
-              console.log(weatherData);
               return weatherData;
             });
           }else{
@@ -36,7 +40,19 @@ var getWeatherData = function(city){
   });
 }
 
-var updateRecentSearchList = function(){
+var updateRecentSearchList = function(city, state){
+
+  var cityState = city + " / " + state;
+
+  // update recents
+  if(!recentSearch.includes(cityState)){
+    // add search term to beginning of array
+    recentSearch.unshift(cityState);
+    // if more than 5 recent search, trim array
+    if(recentSearch.length > 5){
+      recentSearch.pop();
+    }
+  }
 
   // remove all recents
   while(recentSearchList.firstChild){
@@ -55,27 +71,4 @@ var updateRecentSearchList = function(){
   }
 }
 
-var updateWeather = function(event){
-  // get text input value
-  var city = cityInput.value.trim();
-
-  // get weather data for city input
-  var weatherData = getWeatherData(city);
-
-  // update recents
-  if(!recentSearch.includes(city)){
-    // add search term to beginning of array
-    recentSearch.unshift(city);
-    // if more than 5 recent search, trim array
-    if(recentSearch.length > 5){
-      recentSearch.pop();
-    }
-    // update DOM
-    updateRecentSearchList();
-  }
-
-
-
-}
-
-searchBtn.addEventListener("click", updateWeather);
+searchBtn.addEventListener("click", getWeatherData);
